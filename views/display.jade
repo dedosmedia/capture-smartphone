@@ -1,0 +1,74 @@
+extends layout
+
+block content
+  h1= title
+  section.player
+    h1 Player
+    fieldset
+     legend deviceorientation
+     ul
+       li
+         legend
+           meter(min="-360", max="360", name="deviceorientation_alpha") &#945;
+       li
+         legend
+           meter(min="-360", max="360", name="deviceorientation_beta") &#946;
+       li
+         legend
+           meter(min="-360", max="360", name="deviceorientation_gamma") &#947;
+    fieldset
+      legend acceleration
+      ul
+        li
+          legend
+            meter(min="-1", max="1", name="acceleration_x") x
+        li
+          legend
+            meter(min="-1", max="1", name="acceleration_y") y
+        li
+          legend
+            meter(min="-1", max="1", name="acceleration_z") z
+    fieldset
+     legend accelerationIncludingGravity
+     ul
+       li
+         legend
+           meter(min="-1", max="1", name="accelerationIncludingGravity_x") x
+       li
+         legend
+           meter(min="-1", max="1", name="accelerationIncludingGravity_y") y
+       li
+         legend
+           meter(min="-1", max="1", name="accelerationIncludingGravity_z") z
+    fieldset
+     legend geolocation
+     ul
+       li
+         legend
+           input(type="text", name="geolocation_speed")
+           |&nbsp;speed
+       li
+         legend
+           input(type="text", name="geolocation_accuracy") 
+           |&nbsp;accuracy
+       li
+         legend
+           input(type="text", name="geolocation_altitudeAccuracy") 
+           |&nbsp;altitudeAccuracy
+       li
+         legend
+           input(type="text", name="geolocation_altitude") 
+           |&nbsp;altitude
+       li
+         legend
+           input(type="text", name="geolocation_longitude") 
+           |&nbsp;longitude
+       li
+         legend
+           input(type="text", name="geolocation_heading") 
+           |&nbsp;heading
+       li
+         legend
+           input(type="text", name="geolocation_latitude") 
+           |&nbsp;latitude
+  script(src='/javascripts/display.js')
