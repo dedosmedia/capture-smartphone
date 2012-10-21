@@ -4,7 +4,7 @@
  */
 
 exports.index = function(req, res){
-  res.render('index', { title: 'What type of device is this?' });
+  res.render('index', { title: 'Setup this device' });
 };
 
 exports.sensor = function(req, res){
