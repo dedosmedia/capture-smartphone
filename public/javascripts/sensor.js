@@ -13,10 +13,8 @@ requirejs.config({
   }
 });
 
-define(['text!/partials/player.hbs.html','ws','handlebars','event2socket'],
-function(hbs_player,ws){
-  var t_player = Handlebars.compile(hbs_player);
-
+define(['ws','handlebars','event2socket'],
+function(ws){
   ws.on('hello', function(data){
     document.body.style.backgroundColor=data.color;
     console.log(data);

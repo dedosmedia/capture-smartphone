@@ -26,7 +26,6 @@ app.configure(function(){
 });
 
 app.configure('development', function(){
-  console.log('le dev!')
   app.use(express.errorHandler());
   app.locals.pretty = true;
 });
@@ -60,6 +59,9 @@ io.sockets.on('connection', function (socket) {
   socket.color = color;
   socket.emit('hello', {id:socket.id, color:color});
   io.sockets.emit('client connected', {id:socket.id, color:color});
+  socket.on('disconnect', function(){
+    io.sockets.emit('client disconnected', {id:socket.id, color:color});
+  });
   socket.on('event', function (data) {
     data.color = socket.color;
     data.id = socket.id;
@@ -67,4 +69,3 @@ io.sockets.on('connection', function (socket) {
     console.log(socket.id);
   });
 });
-

@@ -13,16 +13,23 @@ requirejs.config({
   }
 });
 
-define(['ws'], function(ws){
+define(['text!/partials/player.hbs.html','ws','handlebars'], function(hbs_player, ws){
+  var t_player = Handlebars.compile(hbs_player);
+  var devices={};
+  
   function updateMeter(name, device_id, val){
-    document.querySelector('[name="'+name+'"]').value = val;
+    var el = document.querySelector('[data-socketid=device_'+device_id+'] [name="'+name+'"]');
+    if(el) el.value = val;
   }
 
-  ws.on('players', function(players){
-    document.querySelector('h1').innerHTML = players[0];
-  });
-
   ws.on('event', function(data){
+    if(!devices[data.id]){
+      devices[data.id]=true;
+      // insert the device into the DOM
+      var el=document.createElement('div');
+      el.innerHTML=t_player(data);
+      document.querySelector('.container').appendChild(el.querySelector('section'));
+    }
     if( data.type=='deviceorientation') {
       updateMeter('deviceorientation_alpha', data.id, data.e.alpha);
       updateMeter('deviceorientation_beta', data.id, data.e.beta);
@@ -38,14 +45,16 @@ define(['ws'], function(ws){
     }
     if(data.type=='geolocation'){
       for(var key in data.e){
-        updateMeter('geolocation_'+key, data.e[key]);
+        updateMeter('geolocation_'+key, data.id, data.e[key]);
       }
     }
   });
 
-  ws.on('client connected', function(data){
-    document.querySelector('.player h1').style.backgroundColor = data.color;
-    //todo add markup here from template lol
+  ws.on('client disconnected', function(data){
+    delete devices[data.id];
+    console.log(data.id);
+    var el = document.querySelector('[data-socketid="device_'+data.id+'"]');
+    if(el)document.querySelector('.container').removeChild(el);
   });  
 });
 
