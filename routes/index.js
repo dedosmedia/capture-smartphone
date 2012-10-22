@@ -8,7 +8,7 @@ exports.index = function(req, res){
 };
 
 exports.sensor = function(req, res){
-  res.render('sensor', { title: 'You are a sensor.'});
+  res.render('sensor', { title: 'sensing...'});
 };
 
 exports.display = function(req, res){

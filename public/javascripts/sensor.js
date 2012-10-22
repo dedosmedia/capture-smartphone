@@ -1,29 +1,24 @@
-var lastEmits={};
-function emitAt100msInterval(name, e){
-  if(!lastEmits[name]) lastEmits[name] = 0;
-  var now=new Date().getTime();
-  if(now >= lastEmits[name] + 200 ){
-    ws.emit('event', {"type":name, e:e});
-    lastEmits[name]=now;
-  }// otherwise drop event to avoid spam
-}
+requirejs.config({
+  baseUrl:'/javascripts',
+  paths:{
+    text:'lib/requirejs-text.2.0.3',
+    handlebars:'lib/handlebars-1.0.rc.1',
+    socketio:'/socket.io/socket.io',
+    ws:'helpers/ws',
+    event2socket:'helpers/event2socket'
+  },
+  shim:{
+    'handlebars':['text'],
+    'ws':['socketio']
+  }
+});
 
-window.addEventListener('deviceorientation', function(e){
-  emitAt100msInterval('deviceorientation',{
-    alpha:e.alpha,
-    beta:e.beta,
-    gamma:e.gamma
+define(['text!/partials/player.hbs.html','ws','handlebars','event2socket'],
+function(hbs_player,ws){
+  var t_player = Handlebars.compile(hbs_player);
+
+  ws.on('hello', function(data){
+    document.body.style.backgroundColor=data.color;
+    console.log(data);
   });
-});
-    
-window.addEventListener('devicemotion', function(e){
-  emitAt100msInterval('devicemotion',{
-    acceleration:e.acceleration,
-    accelerationIncludingGravity:e.accelerationIncludingGravity,
-    rotationRate:e.rotationRate
-  });
-});
-    
-navigator.geolocation.watchPosition(function(location){
-  emitAt100msInterval('geolocation', location.coords);
 });

@@ -1,5 +1,8 @@
-extends layout
-
-block content
-  h3= title
-  script(src='/javascripts/sensor.js')
+doctype 5
+html
+  head
+    title= title
+    meta(name="viewport", content="width=device-width, user-scalable=no")
+  body
+    h3= title
+    script(src='/javascripts/lib/require.2.1.1.js', 'data-main'='/javascripts/sensor')
