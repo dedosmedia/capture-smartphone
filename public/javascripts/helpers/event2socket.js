@@ -1,5 +1,5 @@
-define(['ws'],
-function(ws){
+define(['ws','helpers/sensors'],
+function(ws, sensors){
   console.log(ws);
   var lastEmits={};
   function emitAt100msInterval(name, e){
@@ -11,24 +11,8 @@ function(ws){
     }// otherwise drop event to avoid spam
   }
 
-  window.addEventListener('deviceorientation', function(e){
-    emitAt100msInterval('deviceorientation',{
-      alpha:e.alpha,
-      beta:e.beta,
-      gamma:e.gamma
-    });
-  });
-    
-  window.addEventListener('devicemotion', function(e){
-    emitAt100msInterval('devicemotion',{
-      acceleration:e.acceleration,
-      accelerationIncludingGravity:e.accelerationIncludingGravity,
-      rotationRate:e.rotationRate
-    });
-  });
-    
-  navigator.geolocation.watchPosition(function(location){
-    emitAt100msInterval('geolocation', location.coords);
-  });
+  sensors.deviceorientation(emitAt100msInterval);
+  sensors.devicemotion(emitAt100msInterval);
+  sensors.geolocation(emitAt100msInterval);
 
 });
