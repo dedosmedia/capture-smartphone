@@ -1,10 +1,15 @@
-extends layout
-
-block content
-  h3= title
-  p
-    a(href="/sensor", class="btn btn-success btn-large") Sensor
-    | &nbsp; (recommended for iPhone)
-  p
-    a(href="/display", class="btn btn-success btn-large") Display
-    | &nbsp; (recommended for Chrome)
+doctype 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    meta(name="viewport", content="width=device-width, user-scalable=no")
+  body
+    div.container
+      h3= title
+      p
+        a(href="/sensor", class="btn btn-success btn-large") Sensor
+        | &nbsp; (recommended for iPhone)
+      p
+        a(href="/display", class="btn btn-success btn-large") Display
+        | &nbsp; (recommended for Chrome)

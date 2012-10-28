@@ -1,7 +1,11 @@
-extends layout
-block content
-  style
-    section{float:left}
-    legend{border-bottom:0;margin-bottom:0}
-  h3= title
-  script(src='/javascripts/lib/require.2.1.1.js', 'data-main'='/javascripts/display')
+doctype 5
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/bootstrap.css')
+    link(rel="stylesheet", href="/stylesheets/display.css")
+    meta(name="viewport", content="width=device-width, user-scalable=no")
+  body
+    div.container
+      h3= title
+      script(src='/javascripts/lib/require.2.1.1.js', 'data-main'='/javascripts/display')

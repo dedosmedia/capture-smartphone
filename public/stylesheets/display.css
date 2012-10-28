@@ -1,0 +1,24 @@
+section {
+  width: 300px;
+  float: left;
+}
+legend {
+  color: #444;
+  line-height: inherit;
+  border-bottom: 0;
+  margin: 0;
+}
+ul {
+  list-style: none;
+  padding: 2px;
+}
+input[type="text"] {
+  width: 60px;
+}
+fieldset {
+  border: 1px solid #ccc;
+  margin: 5px;
+}
+meter {
+  width: 200px;
+}
