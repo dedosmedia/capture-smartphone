@@ -13,7 +13,7 @@ define([], function(){
           o[key]=item;
         } else {
           console.log(key, typeof item);
-          o[key]=stripDOM(obj[key]);
+          o[key]=clean_touchEvent(obj[key]);
         }
       }
     }
