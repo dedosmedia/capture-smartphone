@@ -15,5 +15,7 @@ function(ws, sensors){
   sensors.deviceorientation(emitAtInterval);
   sensors.devicemotion(emitAtInterval);
   sensors.geolocation(emitAtInterval);
+  sensors.touchstart(emitAtInterval);
+  sensors.touchend(emitAtInterval);
 
 });
