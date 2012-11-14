@@ -57,15 +57,30 @@ io.sockets.on('connection', function (socket) {
   // calc a color, save it to this connection
   var color = calcColor(socket.id);
   socket.color = color;
+  socket.events = {};
   socket.emit('hello', {id:socket.id, color:color});
   io.sockets.emit('client connected', {id:socket.id, color:color});
   socket.on('disconnect', function(){
     io.sockets.emit('client disconnected', {id:socket.id, color:color});
   });
+
   socket.on('event', function (data) {
-    data.color = socket.color;
-    data.id = socket.id;
-    io.sockets.emit('event', data);
-    console.log(socket.id);
+    socket.events[data.type]=data;
   });
+  
+  var broadcastInterval = setInterval(function(){
+    var clients={}, empty=true;
+    // loop through all clients and their events, and pick them up
+    io.sockets.clients().forEach(function(socket){
+      var events = socket.events, id = socket.id;
+      clients[id]={};
+      for(var key in events){
+        clients[id][key]=events[key];
+        console.log(key);
+        delete events[key];
+        empty=false;
+      }
+    });
+    if(!empty) io.sockets.emit('events', clients);
+  }, 100);
 });
