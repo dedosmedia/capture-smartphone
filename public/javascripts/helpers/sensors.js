@@ -12,7 +12,6 @@ define([], function(){
         if(typeof item !== 'object') {
           o[key]=item;
         } else {
-          console.log(key, typeof item);
           o[key]=clean_touchEvent(obj[key]);
         }
       }
