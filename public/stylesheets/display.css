@@ -22,3 +22,6 @@ fieldset {
 meter {
   width: 200px;
 }
+.hilite {
+  background: #f77;
+}

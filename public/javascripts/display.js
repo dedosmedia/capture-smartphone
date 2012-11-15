@@ -20,43 +20,59 @@ define(['text!/partials/player.hbs.html','ws','handlebars'], function(hbs_player
     var el = document.querySelector('[data-socketid=device_'+device_id+'] [name="'+name+'"]');
     if(el) el.value = val;
   }
+  function onTap(device_id){
+    var el = document.querySelector('[data-socketid=device_'+device_id+']');
+    if(el) el.classList.add('hilite');
+  }
+  function onTapEnd(device_id){
+    var el = document.querySelector('[data-socketid=device_'+device_id+']');
+    if(el) el.classList.remove('hilite');
+  }
 
   ws.on('events', function(devices){
     for(var id in devices){
-      data=devices[id];
-      console.log(data);
-
-      var createIfNotExist = function(device_id){
-        var el = document.querySelector('[data-socketid=device_'+device_id+']');
+      var device=devices[id];
+      device.id=id;
+      console.log(device);
+      var createIfNotExist = function(device){
+        var el = document.querySelector('[data-socketid=device_'+device.id+']');
         if(!el){
           var el=document.createElement('div');
-          el.innerHTML=t_player({id:device_id});
+          el.innerHTML=t_player(device);
           document.querySelector('.container').appendChild(el.querySelector('section'));
         }
-      }(id);
-
-      if(!devices[data.id]){
-        devices[data.id]=true;
-        // insert the device into the DOM
-      }
-      if(data.type=='deviceorientation') {
-        updateMeter('deviceorientation_alpha', data.id, data.e.alpha);
-        updateMeter('deviceorientation_beta', data.id, data.e.beta);
-        updateMeter('deviceorientation_gamma', data.id, data.e.gamma);
-      }
-      if(data.type=='devicemotion'){
-        updateMeter('accelerationIncludingGravity_x', data.id, data.e.accelerationIncludingGravity.x);
-        updateMeter('accelerationIncludingGravity_y', data.id, data.e.accelerationIncludingGravity.y);
-        updateMeter('accelerationIncludingGravity_z', data.id, data.e.accelerationIncludingGravity.z);
-        updateMeter('acceleration_x', data.id, data.e.acceleration.x);
-        updateMeter('acceleration_y', data.id, data.e.acceleration.y);
-        updateMeter('acceleration_z', data.id, data.e.acceleration.z);
-      }
-      if(data.type=='geolocation'){
-        for(var key in data.e){
-          updateMeter('geolocation_'+key, data.id, data.e[key]);
+      }(device);
+      
+      for(var eventType in device){
+        var data=device[eventType];
+        console.log(eventType);
+        if(eventType=='deviceorientation') {
+          updateMeter('deviceorientation_alpha', id, data.e.alpha);
+          updateMeter('deviceorientation_beta', id, data.e.beta);
+          updateMeter('deviceorientation_gamma', id, data.e.gamma);
+        }
+        if(eventType=='devicemotion'){
+          updateMeter('accelerationIncludingGravity_x', id, data.e.accelerationIncludingGravity.x);
+          updateMeter('accelerationIncludingGravity_y', id, data.e.accelerationIncludingGravity.y);
+          updateMeter('accelerationIncludingGravity_z', id, data.e.accelerationIncludingGravity.z);
+          updateMeter('acceleration_x', id, data.e.acceleration.x);
+          updateMeter('acceleration_y', id, data.e.acceleration.y);
+          updateMeter('acceleration_z', id, data.e.acceleration.z);
+        }
+        if(eventType=='geolocation'){
+          for(var key in data.e){
+            updateMeter('geolocation_'+key, id, data.e[key]);
+          }
+        }
+        if(eventType=='touchstart'){
+          onTap(id);
+        }
+        if(eventType=='touchend'){
+          onTapEnd(id);
         }
       }
+      
+
     }
   });
 

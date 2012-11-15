@@ -73,10 +73,9 @@ io.sockets.on('connection', function (socket) {
     // loop through all clients and their events, and pick them up
     io.sockets.clients().forEach(function(socket){
       var events = socket.events, id = socket.id;
-      clients[id]={};
+      clients[id]={color:socket.color};
       for(var key in events){
         clients[id][key]=events[key];
-        console.log(key);
         delete events[key];
         empty=false;
       }

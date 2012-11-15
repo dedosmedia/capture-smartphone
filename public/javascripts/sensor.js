@@ -17,6 +17,5 @@ define(['ws','handlebars','event2socket'],
 function(ws){
   ws.on('hello', function(data){
     document.body.style.backgroundColor=data.color;
-    console.log(data);
   });
 });
