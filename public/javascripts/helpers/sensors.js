@@ -52,6 +52,11 @@ define([], function(){
       window.addEventListener('touchend', function(e){
         callback('touchend',clean_touchEvent(e));
       });
+    },
+    'touchmove': function(callback){
+      window.addEventListener('touchmove', function(e){
+        callback('touchmove',clean_touchEvent(e));
+      });
     }
   };
 });

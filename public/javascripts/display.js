@@ -33,7 +33,6 @@ define(['text!/partials/player.hbs.html','ws','handlebars'], function(hbs_player
     for(var id in devices){
       var device=devices[id];
       device.id=id;
-      console.log(device);
       var createIfNotExist = function(device){
         var el = document.querySelector('[data-socketid=device_'+device.id+']');
         if(!el){
@@ -45,7 +44,6 @@ define(['text!/partials/player.hbs.html','ws','handlebars'], function(hbs_player
       
       for(var eventType in device){
         var data=device[eventType];
-        console.log(eventType);
         if(eventType=='deviceorientation') {
           updateMeter('deviceorientation_alpha', id, data.e.alpha);
           updateMeter('deviceorientation_beta', id, data.e.beta);
@@ -66,6 +64,9 @@ define(['text!/partials/player.hbs.html','ws','handlebars'], function(hbs_player
         }
         if(eventType=='touchstart'){
           onTap(id);
+        }
+        if(eventType=='touchmove'){
+          console.log('touchmove');
         }
         if(eventType=='touchend'){
           onTapEnd(id);
