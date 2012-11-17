@@ -1,8 +1,3 @@
-
-/*
- * GET home page.
- */
-
 exports.index = function(req, res){
   res.render('index', { title: 'Setup this device' });
 };
@@ -12,5 +7,5 @@ exports.sensor = function(req, res){
 };
 
 exports.display = function(req, res){
-  res.render('display', { title: 'You are a display.'});
+  res.render('display', { title: 'This is a display.'});
 };

@@ -14,7 +14,10 @@ node app.js
 
 ### Make your own game
 
-Subscribing to the events from the game controllers is very easy: 
+The purpose of this library is to solve the distribution of events from smartphones to the 
+main game browser. Implementing the game (or other) is up to you. 
+
+Subscribing to the events from the connected smartphones is very easy: 
 
 ```javascript
 
