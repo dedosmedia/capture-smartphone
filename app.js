@@ -48,9 +48,9 @@ io.sockets.on('connection', function (socket) {
     return 'hsl('+
       id.charCodeAt(0)+
       ','+
-      parseInt(id.charCodeAt(2)/5.12)+
+      parseInt(id.charCodeAt(1)/5.12)+
       '%,'+
-      parseInt(50+id.charCodeAt(2)/5.12)+
+      parseInt(25+id.charCodeAt(2)/5.12)+
       '%)';
   }
   
@@ -59,19 +59,22 @@ io.sockets.on('connection', function (socket) {
   socket.color = color;
   socket.events = {};
   socket.emit('hello', {id:socket.id, color:color});
-  io.sockets.emit('client connected', {id:socket.id, color:color});
   socket.on('disconnect', function(){
-    io.sockets.emit('client disconnected', {id:socket.id, color:color});
+    io.sockets.in('displays').emit('client disconnected', {id:socket.id, color:color});
   });
 
   socket.on('event', function (data) {
     socket.events[data.type]=data;
   });
+
+  socket.on('join', function(room){
+    socket.join(room);
+  });
   
   var broadcastInterval = setInterval(function(){
     var clients={}, empty=true;
     // loop through all clients and their events, and pick them up
-    io.sockets.clients().forEach(function(socket){
+    io.sockets.clients('sensors').forEach(function(socket){
       var events = socket.events, id = socket.id;
       clients[id]={color:socket.color};
       for(var key in events){
@@ -80,6 +83,6 @@ io.sockets.on('connection', function (socket) {
         empty=false;
       }
     });
-    if(!empty) io.sockets.emit('events', clients);
+    if(!empty) io.sockets.in('displays').emit('events', clients);
   }, 100);
 });

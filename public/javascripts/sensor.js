@@ -18,4 +18,5 @@ function(ws){
   ws.on('hello', function(data){
     document.body.style.backgroundColor=data.color;
   });
+  ws.emit('join','sensors');
 });

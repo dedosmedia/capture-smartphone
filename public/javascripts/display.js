@@ -80,6 +80,8 @@ define(['text!/partials/player.hbs.html','ws','handlebars'], function(hbs_player
   ws.on('client disconnected', function(data){
     var el = document.querySelector('[data-socketid="device_'+data.id+'"]');
     if(el)document.querySelector('.container').removeChild(el);
-  });  
+  });
+  
+  ws.emit('join','displays');
 });
 
