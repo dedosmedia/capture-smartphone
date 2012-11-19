@@ -63,9 +63,12 @@ io.sockets.on('connection', function (socket) {
     io.sockets.in('displays').emit('client disconnected', {id:socket.id, color:color});
   });
 
-  socket.on('event', function (data) {
-    socket.events[data.type]=data;
+  socket.on('events', function (data) {
+    for(var eventName in data){
+      socket.events[eventName]=data[eventName];
+    }
   });
+
 
   socket.on('join', function(room){
     socket.join(room);
