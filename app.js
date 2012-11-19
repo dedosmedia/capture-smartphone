@@ -79,7 +79,7 @@ io.sockets.on('connection', function (socket) {
     // loop through all clients and their events, and pick them up
     io.sockets.clients('sensors').forEach(function(socket){
       var events = socket.events, id = socket.id;
-      clients[id]={color:socket.color};
+      clients[id]={color:socket.color}; // we should let the client calc this
       for(var key in events){
         clients[id][key]=events[key];
         delete events[key];

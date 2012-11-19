@@ -45,21 +45,21 @@ define(['text!/partials/player.hbs.html','ws','handlebars'], function(hbs_player
       for(var eventType in device){
         var data=device[eventType];
         if(eventType=='deviceorientation') {
-          updateMeter('deviceorientation_alpha', id, data.e.alpha);
-          updateMeter('deviceorientation_beta', id, data.e.beta);
-          updateMeter('deviceorientation_gamma', id, data.e.gamma);
+          updateMeter('deviceorientation_alpha', id, data.alpha);
+          updateMeter('deviceorientation_beta', id, data.beta);
+          updateMeter('deviceorientation_gamma', id, data.gamma);
         }
         if(eventType=='devicemotion'){
-          updateMeter('accelerationIncludingGravity_x', id, data.e.accelerationIncludingGravity.x);
-          updateMeter('accelerationIncludingGravity_y', id, data.e.accelerationIncludingGravity.y);
-          updateMeter('accelerationIncludingGravity_z', id, data.e.accelerationIncludingGravity.z);
-          updateMeter('acceleration_x', id, data.e.acceleration.x);
-          updateMeter('acceleration_y', id, data.e.acceleration.y);
-          updateMeter('acceleration_z', id, data.e.acceleration.z);
+          updateMeter('accelerationIncludingGravity_x', id, data.accelerationIncludingGravity.x);
+          updateMeter('accelerationIncludingGravity_y', id, data.accelerationIncludingGravity.y);
+          updateMeter('accelerationIncludingGravity_z', id, data.accelerationIncludingGravity.z);
+          updateMeter('acceleration_x', id, data.acceleration.x);
+          updateMeter('acceleration_y', id, data.acceleration.y);
+          updateMeter('acceleration_z', id, data.acceleration.z);
         }
         if(eventType=='geolocation'){
-          for(var key in data.e){
-            updateMeter('geolocation_'+key, id, data.e[key]);
+          for(var key in data){
+            updateMeter('geolocation_'+key, id, data[key]);
           }
         }
         if(eventType=='touchstart'){

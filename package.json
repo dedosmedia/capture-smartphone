@@ -1,17 +1,17 @@
 {
   "name": "capture-smartphone",
   "description": "capture smartphone events and replay them in a desktop browser",
-  "version": "0.0.3-2",
+  "version": "0.1.0-1",
   "private": true,
   "scripts": {
     "start": "app.js"
   },
   "dependencies": {
-    "express": "3.0.0rc5",
+    "express": "*",
     "jade": "*",
     "stylus": "*",
-    "socket.io": "0.9.10",
-    "atob": "1.1.0"
+    "socket.io": "*",
+    "atob": "*"
   },
   "subdomain": "cap5",
   "engines": {
