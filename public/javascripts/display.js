@@ -13,8 +13,15 @@ requirejs.config({
   }
 });
 
-define(['text!/partials/player.hbs.html','ws','handlebars'], function(hbs_player, ws){
+define([
+  'helpers/socket2event', 
+  'text!/partials/player.hbs.html',
+  'ws',
+  'handlebars'
+  ], function(devices, hbs_player, ws){
   var t_player = Handlebars.compile(hbs_player);
+  
+  window.devices=devices;
   
   function updateMeter(name, device_id, val){
     var el = document.querySelector('[data-socketid=device_'+device_id+'] [name="'+name+'"]');
