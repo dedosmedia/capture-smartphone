@@ -15,8 +15,10 @@ function(ws){
   }
 
   function removeEventListener(eventType, callback){
-    if(events[eventType]){
-      //events[eventType].splice(events.indexOf(callback), 1);
+    var eventList = events[eventType], 
+    index = eventList.indexOf(callback);
+    if(eventList && index -1){
+      eventList.splice(index, 1);
     }
   }
   
