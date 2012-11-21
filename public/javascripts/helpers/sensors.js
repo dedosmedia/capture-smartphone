@@ -1,24 +1,5 @@
-define([], function(){
-  function clean_touchEvent(obj){
-    var whitelist='targetTouches,scale,changedTouches,rotation,touches,'+
-    'timeStamp,type,length,'+
-    'clientX,clientY,identifier,pageY,pageX,screenX,screenY'+
-    '0,1,2,3,4,5,6,7,8,9'+
-    ''.split(',');
-    var o={};
-    for(var key in obj){
-      var item = obj[key];
-      if(whitelist.indexOf(key) !== -1) {
-        if(typeof item !== 'object') {
-          o[key]=item;
-        } else {
-          o[key]=clean_touchEvent(obj[key]);
-        }
-      }
-    }
-    return o;
-  }
-
+define(['helpers/clean_touch_event'], 
+function(cleanTouchEvent){
   return {
     'deviceorientation': function(callback){
       window.addEventListener('deviceorientation', function(e){
@@ -45,17 +26,17 @@ define([], function(){
     },
     'touchstart': function(callback){
       window.addEventListener('touchstart', function(e){
-        callback('touchstart',clean_touchEvent(e));
+        callback('touchstart',cleanTouchEvent(e));
       });
     },
     'touchend': function(callback){
       window.addEventListener('touchend', function(e){
-        callback('touchend',clean_touchEvent(e));
+        callback('touchend',cleanTouchEvent(e));
       });
     },
     'touchmove': function(callback){
       window.addEventListener('touchmove', function(e){
-        callback('touchmove',clean_touchEvent(e));
+        callback('touchmove',cleanTouchEvent(e));
       });
     }
   };
