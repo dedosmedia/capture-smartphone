@@ -29,6 +29,7 @@ function(ws){
       
       for(var eventType in device){
         var data=device[eventType];
+        data.id=id;
         fire(eventType, data);
       }
     }

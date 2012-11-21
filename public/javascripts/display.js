@@ -21,8 +21,6 @@ define([
   ], function(devices, hbs_player, ws){
   var t_player = Handlebars.compile(hbs_player);
   
-  window.devices=devices;
-  
   function updateMeter(name, device_id, val){
     var el = document.querySelector('[data-socketid=device_'+device_id+'] [name="'+name+'"]');
     if(el) el.value = val;
@@ -36,6 +34,39 @@ define([
     if(el) el.classList.remove('hilite');
   }
 
+  // Listen to all these remote events!
+  devices.addEventListener('devicemotion', function(e){
+    updateMeter('accelerationIncludingGravity_x', e.id, e.accelerationIncludingGravity.x);
+    updateMeter('accelerationIncludingGravity_y', e.id, e.accelerationIncludingGravity.y);
+    updateMeter('accelerationIncludingGravity_z', e.id, e.accelerationIncludingGravity.z);
+    updateMeter('acceleration_x', e.id, e.acceleration.x);
+    updateMeter('acceleration_y', e.id, e.acceleration.y);
+    updateMeter('acceleration_z', e.id, e.acceleration.z);
+  });
+
+  devices.addEventListener('deviceorientation', function(e){
+    updateMeter('deviceorientation_alpha', e.id, e.alpha);
+    updateMeter('deviceorientation_beta', e.id, e.beta);
+    updateMeter('deviceorientation_gamma', e.id, e.gamma);
+  });
+  
+  devices.addEventListener('geolocation', function(e){
+    for(var key in e){
+      updateMeter('geolocation_'+key, e.id, e[key]);
+    }
+  });
+
+  devices.addEventListener('touchstart', function(e){
+    onTap(e.id);
+  });
+  devices.addEventListener('touchmove', function(e){
+    console.log('touchmove');
+  });
+  devices.addEventListener('touchend', function(e){
+    onTapEnd(e.id);
+  });
+  
+
   ws.on('events', function(devices){
     for(var id in devices){
       var device=devices[id];
@@ -48,38 +79,6 @@ define([
           document.querySelector('.container').appendChild(el.querySelector('section'));
         }
       }(device);
-      
-      for(var eventType in device){
-        var data=device[eventType];
-        if(eventType=='deviceorientation') {
-          updateMeter('deviceorientation_alpha', id, data.alpha);
-          updateMeter('deviceorientation_beta', id, data.beta);
-          updateMeter('deviceorientation_gamma', id, data.gamma);
-        }
-        if(eventType=='devicemotion'){
-          updateMeter('accelerationIncludingGravity_x', id, data.accelerationIncludingGravity.x);
-          updateMeter('accelerationIncludingGravity_y', id, data.accelerationIncludingGravity.y);
-          updateMeter('accelerationIncludingGravity_z', id, data.accelerationIncludingGravity.z);
-          updateMeter('acceleration_x', id, data.acceleration.x);
-          updateMeter('acceleration_y', id, data.acceleration.y);
-          updateMeter('acceleration_z', id, data.acceleration.z);
-        }
-        if(eventType=='geolocation'){
-          for(var key in data){
-            updateMeter('geolocation_'+key, id, data[key]);
-          }
-        }
-        if(eventType=='touchstart'){
-          onTap(id);
-        }
-        if(eventType=='touchmove'){
-          console.log('touchmove');
-        }
-        if(eventType=='touchend'){
-          onTapEnd(id);
-        }
-      }
-      
 
     }
   });
