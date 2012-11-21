@@ -19,7 +19,7 @@ node app.js
 The purpose of this library is to solve the distribution of events from smartphones to the 
 main game browser. Implementing the game (or other) is up to you. 
 
-Subscribing to the events from the connected smartphones will be very easy*: 
+Subscribing to the events from the connected smartphones is very easy*: 
 
 ```javascript
 devices.addEventListener('touchstart', function(e){
@@ -27,7 +27,7 @@ devices.addEventListener('touchstart', function(e){
 });
 ```
 
-*Not actually working yet
+*API is subject to change
 
 The exact details of this API are in discussion and can change. 
 
