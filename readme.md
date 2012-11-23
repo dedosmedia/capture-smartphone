@@ -29,8 +29,6 @@ devices.addEventListener('touchstart', function(e){
 
 *API is subject to change
 
-The exact details of this API are in discussion and can change. 
-
 ### Tech talk
 
 #### Which events are supported?
