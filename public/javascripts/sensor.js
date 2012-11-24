@@ -17,6 +17,10 @@ define(['ws','handlebars','event2socket'],
 function(ws){
   ws.on('hello', function(data){
     document.body.style.backgroundColor=data.color;
+    document.querySelector('h3').innerHTML='';
+  });
+  ws.on('disconnect', function(){
+    document.querySelector('h3').innerHTML='disconnected';
   });
   ws.emit('join','sensors');
 });
