@@ -26,10 +26,10 @@ function(ws){
     for(var id in devices){
       var device=devices[id];
       device.id=id;
-      
       for(var eventType in device){
         var data=device[eventType];
         data.id=id;
+        data.color=device.color;
         fire(eventType, data);
       }
     }
