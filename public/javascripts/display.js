@@ -66,22 +66,23 @@ define([
     onTapEnd(e.id);
   });
   
-
   ws.on('events', function(devices){
     for(var id in devices){
       var device=devices[id];
       device.id=id;
-      var createIfNotExist = function(device){
-        var el = document.querySelector('[data-socketid=device_'+device.id+']');
-        if(!el){
-          var el=document.createElement('div');
-          el.innerHTML=t_player(device);
-          document.querySelector('.container').appendChild(el.querySelector('section'));
-        }
-      }(device);
-
     }
   });
+
+	ws.on('client connected', function(device){
+		console.log('client connected');
+    var el = document.querySelector('[data-socketid=device_'+device.id+']');
+    if(!el){
+      var el=document.createElement('div');
+      el.innerHTML=t_player(device);
+      document.querySelector('.container').appendChild(el.querySelector('section'));
+    }
+	});
+
 
   ws.on('client disconnected', function(data){
     var el = document.querySelector('[data-socketid="device_'+data.id+'"]');
@@ -90,4 +91,3 @@ define([
   
   ws.emit('join','displays');
 });
-

@@ -27,6 +27,7 @@ function(cleanTouchEvent){
     'touchstart': function(callback){
       window.addEventListener('touchstart', function(e){
         callback('touchstart',cleanTouchEvent(e));
+        e.preventDefault();
       });
     },
     'touchend': function(callback){

@@ -59,6 +59,9 @@ io.sockets.on('connection', function (socket) {
   socket.color = color;
   socket.events = {};
   socket.emit('hello', {id:socket.id, color:color});
+
+  // let displays know about connects and disconnects
+  io.sockets.in('displays').emit('client connected', {id:socket.id, color:color});
   socket.on('disconnect', function(){
     io.sockets.in('displays').emit('client disconnected', {id:socket.id, color:color});
   });
@@ -68,7 +71,6 @@ io.sockets.on('connection', function (socket) {
       socket.events[eventName]=data[eventName];
     }
   });
-
 
   socket.on('join', function(room){
     socket.join(room);
