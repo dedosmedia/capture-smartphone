@@ -26,16 +26,27 @@
 		], function(devices, ws){
 			var c=document.querySelector('canvas'), ctx=c.getContext('2d');
 			
-			function putCircle(o){
-				ctx.fillStyle = o.color;
+			ctx.lineWidth=25;
+			ctx.lineCap = 'round';
+
+			function putCircle(coords, color){
+				ctx.fillStyle = color;
 				ctx.beginPath();
-				ctx.arc(o.x, o.y, 10, 0, Math.PI*2, true);
+				ctx.arc(coords.x, coords.y, 10, 0, Math.PI*2, true);
 				ctx.closePath();
 				ctx.fill();
 			}
+
+			function line(from, to, color){
+				ctx.strokeStyle = color;
+				ctx.beginPath();
+				ctx.moveTo(from.x, from.y)
+				ctx.lineTo(to.x, to.y);
+				ctx.stroke();
+			}
 			
 			var painters={}; // 1D list of id:s generated using device_id+finger_id
-			console.log('lll');
+
 			ws.on('client connected', function(e){
 				console.log('client connected');
 			});
@@ -44,22 +55,21 @@
 				var t, o;
 		    for(var i=0; i<e.targetTouches.length; i++){
 					t=e.targetTouches[i];
-					o={x:t.clientX,y:t.clientY,color:e.color};
-					// todo
-					//painters[e.id+'_'+i]={x:t.clientX,y:t.clientY,color:e.color};
-					putCircle(o);
+					o={x:t.clientX,y:t.clientY};
+					painters[e.id+'_'+i]=o;
+					putCircle(o, e.color);
 		    }
 		  });
 		  devices.addEventListener('touchmove', function(e){
 				var t;
 		    for(var i=0; i<e.targetTouches.length; i++){
 					t=e.targetTouches[i];
-					o={x:t.clientX,y:t.clientY,color:e.color};
-					putCircle(o);
+					o={x:t.clientX,y:t.clientY};
+					line(painters[e.id+'_'+i], o, e.color);
+					painters[e.id+'_'+i]=o;
 		    }
 		  });
 		  devices.addEventListener('touchend', function(e){
-		    console.log('tap');
 		  });
 			
 			ws.emit('join','displays');
