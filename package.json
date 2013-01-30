@@ -1,7 +1,7 @@
 {
   "name": "capture-smartphone",
   "description": "capture smartphone events and replay them in a desktop browser",
-  "version": "0.1.0-4",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "start": "app.js"

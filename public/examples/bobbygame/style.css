@@ -1,0 +1,75 @@
+body{
+  background:#a6a6a6;
+  color:transparent;
+  font-size:10px;
+}
+h1{
+  background-image:url(sign.png);
+  width:384px;
+  height:135px;
+  margin-left:220px;
+  margin-bottom:20px;
+}
+.cred{
+  color:transparent;
+  background-image:url(retropixelgames.png);
+  display:block;
+  width:300px;
+  height:21px;
+  margin-left:250px;
+  text-decoration:none;
+}
+.insertcoin{
+  background-image:url(insert-coin.png);
+  width:165px;
+  height:33px;
+  margin-left:330px;
+  text-decoration:none;  
+}
+.thebox{
+  background-image:url(box.png);
+  width:87px;
+  height:54px;
+  position:absolute;
+  top:350px;
+  left:500px;
+}
+.bobby{
+  background-image:url(bobby-simple.png);
+  width:87px;
+  height:186px;
+  position:absolute;
+  top:220px;
+  left:600px;
+}
+.bobbyshadow{
+  background-image:url(bobby-shadow.png);
+  width:47px;
+  height:6px;
+  position:absolute;
+  top:400px;
+  left:624px;
+}
+
+.bobby.jump{
+  -webkit-animation-name: bounce;
+  -webkit-animation-duration: .6s;
+  -webkit-animation-iteration-count: 2;
+  -webkit-animation-direction: alternate;
+  -webkit-transition:all 0.6s ease-in-out;
+}
+
+@-webkit-keyframes bounce {
+  from { margin: 0px auto 0;}
+  to { margin: -200px auto 0;}
+}
+@-webkit-keyframes blinker {  
+  from { opacity: 1.0; }
+  to { opacity: 0.0; }
+}
+.css3-blink {
+  -webkit-animation-name: blinker;  
+  -webkit-animation-iteration-count: infinite;  
+  -webkit-animation-timing-function: cubic-bezier(1.0,0,0,1.0);
+  -webkit-animation-duration: 2s; 
+}

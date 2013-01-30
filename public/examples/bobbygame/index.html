@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+	<link rel="stylesheet" href="style.css">
+	<script>
+	function jump(el){
+		el.classList.add('jump');
+		setTimeout(function(){
+			el.classList.remove('jump');
+		}, 1200);
+	}
+	</script>
+</head>
+<body>
+	<h1>Ruben &amp; Bobby</h1>
+<p>	
+	<a class="cred" href="http://retropixelgames.com">By RetroPixelGames.com</a>
+</p>
+<p class="insertcoin css3-blink">Insert Coin</p>
+<div class="thebox"></div>
+<div class="bobbyshadow"></div>
+<div class="bobby"></div>
+
+
+<script src="/javascripts/lib/require.2.1.1.js"></script>
+<script>
+requirejs.config({
+  baseUrl:'/javascripts',
+  paths:{
+    socketio:'/socket.io/socket.io',
+    ws:'helpers/ws',
+    event2socket:'helpers/event2socket'
+  },
+  shim:{
+    'ws':['socketio']
+  }
+});
+
+require([
+  'helpers/socket2event', 
+  'ws'
+	], function(devices, ws){
+		devices.addEventListener('touchstart', function(e){
+			jump(document.querySelector('.bobby'));
+	  });
+		ws.emit('join','displays');
+	});
+	
+</script>
+
+</body>
+</html>
