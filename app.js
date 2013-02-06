@@ -1,4 +1,9 @@
 /**
+ * Interval - for a weak server, use higher value
+ */
+ var heartbeatInterval = 100;
+
+/**
  * Module dependencies.
  */
 
@@ -88,5 +93,5 @@ io.sockets.on('connection', function (socket) {
       }
     });
     if(!empty) io.sockets.in('displays').emit('events', clients);
-  }, 100);
+  }, heartbeatInterval);
 });
