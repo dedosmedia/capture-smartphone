@@ -43,6 +43,13 @@ require([
 		devices.addEventListener('touchstart', function(e){
 			jump(document.querySelector('.bobby'));
 	  });
+    ws.on('client connected', function(e){
+            console.log('client connected');
+            document.querySelector('.insertcoin').style.display='none';
+    });
+    ws.on('client disconnected', function(e){
+            document.querySelector('.insertcoin').style.display='block';
+    });
 		ws.emit('join','displays');
 	});
 	
