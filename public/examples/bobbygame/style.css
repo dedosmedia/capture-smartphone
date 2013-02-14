@@ -7,7 +7,7 @@ h1{
   background-image:url(sign.png);
   width:384px;
   height:135px;
-  margin-left:220px;
+  margin-left:120px;
   margin-bottom:20px;
 }
 .cred{
@@ -16,14 +16,14 @@ h1{
   display:block;
   width:300px;
   height:21px;
-  margin-left:250px;
+  margin-left:150px;
   text-decoration:none;
 }
 .insertcoin{
   background-image:url(insert-coin.png);
   width:165px;
   height:33px;
-  margin-left:330px;
+  margin-left:230px;
   text-decoration:none;  
 }
 .thebox{
@@ -32,7 +32,7 @@ h1{
   height:54px;
   position:absolute;
   top:350px;
-  left:500px;
+  left:400px;
 }
 .bobby{
   background-image:url(bobby-simple.png);
@@ -40,7 +40,7 @@ h1{
   height:186px;
   position:absolute;
   top:220px;
-  left:600px;
+  left:500px;
 }
 .bobbyshadow{
   background-image:url(bobby-shadow.png);
@@ -48,7 +48,7 @@ h1{
   height:6px;
   position:absolute;
   top:400px;
-  left:624px;
+  left:524px;
 }
 
 .bobby.jump{
