@@ -22,7 +22,7 @@ function(ws, sensors){
   // for now we just report all events, as the bytesize probably won't exceed one packet anyways
   sensors.deviceorientation(emitAtInterval);
   sensors.devicemotion(emitAtInterval);
-  sensors.geolocation(emitAtInterval);
+  //sensors.geolocation(emitAtInterval);
   sensors.touchstart(emitAtInterval);
   sensors.touchmove(emitAtInterval);
   sensors.touchend(emitAtInterval);
