@@ -24,9 +24,9 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(app.router);
   app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(app.router);
 });
 
 app.configure('development', function(){
@@ -37,6 +37,7 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.get('/sensor', routes.sensor);
 app.get('/display', routes.display);
+app.get('*', routes.sensor);
 
 // start server
 var ioHandle = http.createServer(app).listen(app.get('port'), function(){
