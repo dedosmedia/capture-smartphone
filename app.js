@@ -24,9 +24,9 @@ app.configure(function(){
   app.use(express.logger('dev'));
   app.use(express.bodyParser());
   app.use(express.methodOverride());
-  app.use(app.router);
   app.use(require('stylus').middleware(__dirname + '/public'));
   app.use(express.static(path.join(__dirname, 'public')));
+  app.use(app.router);
 });
 
 app.configure('development', function(){
@@ -37,6 +37,7 @@ app.configure('development', function(){
 app.get('/', routes.index);
 app.get('/sensor', routes.sensor);
 app.get('/display', routes.display);
+app.get('*', routes.sensor);
 
 // start server
 var ioHandle = http.createServer(app).listen(app.get('port'), function(){
@@ -49,13 +50,13 @@ io = io.listen(ioHandle);
 io.sockets.on('connection', function (socket) {
   function calcColor(base64id){
     var id = atob(base64id);
-    return 'hsl('+
+    return 'hsla('+
       id.charCodeAt(0)+
       ','+
       parseInt(id.charCodeAt(1)/5.12)+
       '%,'+
       parseInt(25+id.charCodeAt(2)/5.12)+
-      '%)';
+      '%, 1)';
   }
   
   // calc a color, save it to this connection
@@ -70,22 +71,27 @@ io.sockets.on('connection', function (socket) {
     io.sockets.in('displays').emit('client disconnected', {id:socket.id, color:color});
   });
 
+  // allow clients to join rooms
+  socket.on('join', function(room){
+    socket.join(room);
+    if(room=='displays'){
+      io.sockets.in('sensors').emit('display connected'); // "fresh start"
+    }
+  });
+  
+  // cache all events serverside until we flush the queue next time
   socket.on('events', function (data) {
     for(var eventName in data){
       socket.events[eventName]=data[eventName];
     }
   });
 
-  socket.on('join', function(room){
-    socket.join(room);
-  });
-  
   var broadcastInterval = setInterval(function(){
     var clients={}, empty=true;
     // loop through all clients and their events, and pick them up
     io.sockets.clients('sensors').forEach(function(socket){
       var events = socket.events, id = socket.id;
-      clients[id]={color:socket.color}; // we should let the client calc this
+      clients[id]={color:socket.color};
       for(var key in events){
         clients[id][key]=events[key];
         delete events[key];

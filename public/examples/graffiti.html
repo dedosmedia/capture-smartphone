@@ -5,7 +5,8 @@
 </head>
 <body>
 
-	<canvas height=768 width=1024></canvas>
+	<canvas height="768" width="1024"></canvas>
+	<div class="container" style="position:absolute;left:0;top:0;width:768px;height:1024px;"></div>
 	<script src="/javascripts/lib/require.2.1.1.js"></script>
 	<script>
 	requirejs.config({
@@ -29,20 +30,33 @@
 			ctx.lineWidth=25;
 			ctx.lineCap = 'round';
 
-			function putCircle(coords, color){
+			function putCircle(coords, color, el){
+				var offset_x = parseInt(el.style.left.replace('px',''));
+				var offset_y = parseInt(el.style.top.replace('px',''));
 				ctx.fillStyle = color;
 				ctx.beginPath();
-				ctx.arc(coords.x, coords.y, 10, 0, Math.PI*2, true);
+				ctx.arc(offset_x+coords.x, offset_y+coords.y, 10, 0, Math.PI*2, true);
 				ctx.closePath();
 				ctx.fill();
 			}
 
-			function line(from, to, color){
+			function line(from, to, color, el){
+				var offset_x = parseInt(el.style.left.replace('px',''));
+				var offset_y = parseInt(el.style.top.replace('px',''));
+				console.log(offset_y, offset_x)
 				ctx.strokeStyle = color;
 				ctx.beginPath();
-				ctx.moveTo(from.x, from.y)
-				ctx.lineTo(to.x, to.y);
+				ctx.moveTo(offset_x+from.x, offset_y+from.y)
+				ctx.lineTo(offset_x+to.x, offset_y+to.y);
 				ctx.stroke();
+			}
+			
+			function move(from, to, el){
+				var dx = to.x - from.x;
+				var dy = to.y - from.y;
+				console.log(dx, dy);
+				el.style.left = parseInt(el.style.left.replace('px',''))+dx+'px';
+				el.style.top = parseInt(el.style.top.replace('px',''))+dy+'px';
 			}
 			
 			var painters={}; // 1D list of id:s generated using device_id+finger_id
@@ -50,28 +64,66 @@
 			ws.on('client connected', function(e){
 				console.log('client connected');
 			});
+		  ws.on('client disconnected', function(data){
+		    var el = document.querySelector('[data-socketid="device_'+data.id+'"]');
+		    if(el)document.querySelector('.container').removeChild(el);
+		  });
+			
 			
 			devices.addEventListener('touchstart', function(e){
 				var t, o;
-		    for(var i=0; i<e.targetTouches.length; i++){
-					t=e.targetTouches[i];
-					o={x:t.clientX,y:t.clientY};
-					painters[e.id+'_'+i]=o;
-					putCircle(o, e.color);
-		    }
+				var el=document.querySelector('[data-socketid="device_'+e.id+'"]');
+				if(e.targetTouches.length!==2){
+			    for(var i=0; i<e.targetTouches.length; i++){
+						t=e.targetTouches[i];
+						o={x:t.clientX,y:t.clientY};
+						painters[e.id+'_'+i]=o;
+						putCircle(o, e.color, el);
+			    }
+				} else { // swipe detected, move!
+					var t=e.targetTouches[0], o={x:t.clientX,y:t.clientY};
+					painters[e.id+'_0']=o;
+					console.log('moving...');
+				}
+
 		  });
 		  devices.addEventListener('touchmove', function(e){
 				var t;
-		    for(var i=0; i<e.targetTouches.length; i++){
-					t=e.targetTouches[i];
-					o={x:t.clientX,y:t.clientY};
-					line(painters[e.id+'_'+i], o, e.color);
-					painters[e.id+'_'+i]=o;
-		    }
+				var el=document.querySelector('[data-socketid="device_'+e.id+'"]');
+				if(e.targetTouches.length!==2){
+			    for(var i=0; i<e.targetTouches.length; i++){
+						t=e.targetTouches[i];
+						o={x:t.clientX,y:t.clientY};
+						line(painters[e.id+'_'+i], o, e.color, el);
+						painters[e.id+'_'+i]=o;
+			    }
+				} else { // swipe detected, move!
+					console.log('moving...');
+					var t=e.targetTouches[0], o={x:t.clientX,y:t.clientY};
+					
+					move(painters[e.id+'_0'], o, el);
+					painters[e.id+'_0']=o;
+				}
 		  });
 		  devices.addEventListener('touchend', function(e){
+				if(e.targetTouches.length==2){
+					console.log('finish!');
+				}
 		  });
-			
+			devices.addEventListener('deviceinfo', function(e){
+				console.log('deviceinfo');
+				console.log(e);
+				// make a box this size with alpha transparency
+				var el=document.createElement('div');
+				el.innerHTML = '<section class="player" data-socketid="device_'+
+					e.id+
+					'" style="position:absolute;left:0;top:0;'+
+					'width:'+e.width+'px;'+
+					'height:'+e.height+'px;'+
+					'background-color:'+e.color.replace('1)','0.15)')+';'+
+					'border:1px solid '+e.color+'"></div>';
+				document.querySelector('.container').appendChild(el.querySelector('section'));
+		  });
 			ws.emit('join','displays');
 		});
 	

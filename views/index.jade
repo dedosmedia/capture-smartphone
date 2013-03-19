@@ -4,12 +4,11 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/bootstrap.css')
     meta(name="viewport", content="width=device-width, user-scalable=no")
+    script(src='/javascripts/lib/qrcode.js')
+    script(src='/javascripts/helpers/qr.js')
   body
     div.container
       h3= title
-      p
-        a(href="/sensor", class="btn btn-success btn-large") Sensor
-        | &nbsp; (recommended for iPhone)
       p
         a(href="/display", class="btn btn-success btn-large") Display (debug)
         | &nbsp; (recommended for Chrome)
@@ -19,3 +18,9 @@ html
       p
         a(href="/examples/bobbygame/index.html", class="btn btn-success btn-large") Display (Ruben og Bobby)
         | &nbsp; (recommended for Chrome)
+        p
+          a(href="/sensor", class="btn btn-success btn-large") Sensor
+          | &nbsp; (recommended for iPhone) - or scan the QR code below
+      div#qr
+    script
+      update_qrcode("#{address}/sensor")
