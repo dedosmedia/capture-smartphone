@@ -6,6 +6,7 @@
 <body>
 
 	<canvas height=768 width=1024></canvas>
+	<div class="container" style="position:absolute;left:0;top:0;width:768px;height:1024px;"></div>
 	<script src="/javascripts/lib/require.2.1.1.js"></script>
 	<script>
 	requirejs.config({
@@ -53,25 +54,50 @@
 			
 			devices.addEventListener('touchstart', function(e){
 				var t, o;
-		    for(var i=0; i<e.targetTouches.length; i++){
-					t=e.targetTouches[i];
-					o={x:t.clientX,y:t.clientY};
-					painters[e.id+'_'+i]=o;
-					putCircle(o, e.color);
-		    }
+				if(e.targetTouches.length!==2){
+			    for(var i=0; i<e.targetTouches.length; i++){
+						t=e.targetTouches[i];
+						o={x:t.clientX,y:t.clientY};
+						painters[e.id+'_'+i]=o;
+						putCircle(o, e.color);
+			    }
+				} else { // swipe detected, move!
+					console.log('moving...');
+				}
+
 		  });
 		  devices.addEventListener('touchmove', function(e){
 				var t;
-		    for(var i=0; i<e.targetTouches.length; i++){
-					t=e.targetTouches[i];
-					o={x:t.clientX,y:t.clientY};
-					line(painters[e.id+'_'+i], o, e.color);
-					painters[e.id+'_'+i]=o;
-		    }
+				if(e.targetTouches.length!==2){
+			    for(var i=0; i<e.targetTouches.length; i++){
+						t=e.targetTouches[i];
+						o={x:t.clientX,y:t.clientY};
+						line(painters[e.id+'_'+i], o, e.color);
+						painters[e.id+'_'+i]=o;
+			    }
+				} else { // swipe detected, move!
+					console.log('moving...');
+					var t=e.targetTouches[0], o={x:t.clientX,y:t.clientY};
+					var el=document.querySelector('[data-socketid="device_'+e.id+'"]');
+					//el.style.webkitTransform = 'translate3d('+o.x+'px,'+o.y+'px,0)'
+				}
 		  });
 		  devices.addEventListener('touchend', function(e){
 		  });
-			
+			devices.addEventListener('deviceinfo', function(e){
+				console.log('deviceinfo');
+				console.log(e);
+				// make a box this size with alpha transparency
+				var el=document.createElement('div');
+				el.innerHTML = '<section class="player" data-socketid="device_'+
+					e.id+
+					'" style="position:absolute;left:0;top:0;'+
+					'width:'+e.width+'px;'+
+					'height:'+e.height+'px;'+
+					'background-color:'+e.color.replace('1)','0.15)')+';'+
+					'border:1px solid '+e.color+'"></div>';
+				document.querySelector('.container').appendChild(el.querySelector('section'));
+		  });
 			ws.emit('join','displays');
 		});
 	
