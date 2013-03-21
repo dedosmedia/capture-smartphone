@@ -1,7 +1,7 @@
 /**
- * Interval - for a weak server, use higher value
+ * Interval - for a weak display or server, use higher value
  */
- var heartbeatInterval = 100;
+ var heartbeatInterval = 50;
 
 /**
  * Module dependencies.

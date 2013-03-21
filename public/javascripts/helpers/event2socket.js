@@ -1,6 +1,6 @@
 define(['ws','helpers/sensors'],
 function(ws, sensors){
-  var interval = 100, eventQueue = {};
+  var interval = 50, eventQueue = {};
 
   function emitAtInterval(name, e){
     eventQueue[name]=e;
