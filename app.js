@@ -12,7 +12,8 @@ var express = require('express')
   , routes = require('./routes')
   , http = require('http')
   , path = require('path')
-  , io = require('socket.io');
+  , io = require('socket.io')
+  , stats = require('measured').createCollection();
 
 var app = express();
 
@@ -81,6 +82,7 @@ io.sockets.on('connection', function (socket) {
   
   // cache all events serverside until we flush the queue next time
   socket.on('events', function (data) {
+    stats.meter('incoming events').mark();
     for(var eventName in data){
       socket.events[eventName]=data[eventName];
     }
@@ -101,3 +103,7 @@ io.sockets.on('connection', function (socket) {
     if(!empty) io.sockets.in('displays').emit('events', clients);
   }, heartbeatInterval);
 });
+
+setInterval(function() {
+  console.log(stats.toJSON());
+}, 1000);

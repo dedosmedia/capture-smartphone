@@ -5,8 +5,8 @@
 </head>
 <body>
 
-	<canvas height="768" width="1024"></canvas>
-	<div class="container" style="position:absolute;left:0;top:0;width:768px;height:1024px;"></div>
+	<canvas height="720" width="1366"></canvas>
+	<div class="container" style="position:absolute;left:0;top:0;width:1366px;height:720px;"></div>
 	<script src="/javascripts/lib/require.2.1.1.js"></script>
 	<script>
 	requirejs.config({
@@ -27,7 +27,7 @@
 		], function(devices, ws){
 			var c=document.querySelector('canvas'), ctx=c.getContext('2d');
 			
-			ctx.lineWidth=25;
+			ctx.lineWidth=15;
 			ctx.lineCap = 'round';
 
 			function putCircle(coords, color, el){

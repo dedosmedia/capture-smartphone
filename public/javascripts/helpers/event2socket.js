@@ -1,6 +1,6 @@
 define(['ws','helpers/sensors'],
 function(ws, sensors){
-  var interval = 50, eventQueue = {};
+  var interval = 5, eventQueue = {};
 
   function emitAtInterval(name, e){
     eventQueue[name]=e;
@@ -20,9 +20,9 @@ function(ws, sensors){
   }, interval);
 
   // Todo activate subscription per event type 
-  //sensors.deviceorientation(emitAtInterval);
-  //sensors.devicemotion(emitAtInterval);
-  //sensors.geolocation(emitAtInterval);
+  sensors.deviceorientation(emitAtInterval);
+  sensors.devicemotion(emitAtInterval);
+  sensors.geolocation(emitAtInterval);
   sensors.touchstart(emitAtInterval);
   sensors.touchmove(emitAtInterval);
   sensors.touchend(emitAtInterval);

@@ -11,7 +11,8 @@
     "jade": "*",
     "stylus": "*",
     "socket.io": "*",
-    "atob": "*"
+    "atob": "*",
+    "measured":"0.1.3"
   },
   "subdomain": "cap5",
   "engines": {
