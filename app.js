@@ -58,6 +58,17 @@ var ioHandle = http.createServer(app).listen(app.get('port'), function(){
 // le socket web
 io = io.listen(ioHandle);
 
+io.set('log level', 1);
+io.enable('browser client minification');
+io.enable('browser client gzip');
+io.set('transports', [
+    'websocket'
+//  , 'flashsocket'
+//  , 'htmlfile'
+//  , 'xhr-polling'
+//  , 'jsonp-polling'
+]);
+
 io.sockets.on('connection', function (socket) {
   function calcColor(base64id){
     var id = atob(base64id);
