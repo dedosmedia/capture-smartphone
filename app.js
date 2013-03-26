@@ -42,8 +42,8 @@ app.get('*', function(req, res){
   var url = '/sensor/';
   var xmlResponse = '<HTML><BODY><H2>Browser error!</H2>Browser does not support redirects!</BODY> <!-- <?xml version="1.0" encoding="UTF-8"?> <WISPAccessGatewayParam xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.wballiance.net/wispr_2_0.xsd"> <Redirect> <MessageType>100</MessageType> <ResponseCode>0</ResponseCode> <VersionHigh>2.0</VersionHigh> <VersionLow>1.0</VersionLow> <AccessProcedure>1.0</AccessProcedure> <AccessLocation>CDATA[[isocc=,cc=,ac=,network=Coova,]]</AccessLocation> <LocationName>CDATA[[My_HotSpot]]</LocationName> <LoginURL>'+url+'</LoginURL> <AbortLoginURL>'+url+'</AbortLoginURL> <EAPMsg>AQEABQE=</EAPMsg> </Redirect> </WISPAccessGatewayParam> --> </HTML>';
   res.statusCode = 302;
-  res.setHeader(' Content-Type', 'text/html; charset=UTF-8');
-  res.setHeader('Content-Length', xmlResponse);
+  res.setHeader('Content-Type', 'text/html; charset=UTF-8');
+  res.setHeader('Content-Length', xmlResponse.length);
   res.setHeader('Location', url);
   console.log('Captive portal request detected: '+req.url);
   res.write(xmlResponse);
