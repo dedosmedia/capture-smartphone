@@ -1,4 +1,4 @@
-define(['ws'],
+define(['/javascripts/helpers/ws'],
 function(ws){
   var events = {};
   

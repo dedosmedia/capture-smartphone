@@ -1,4 +1,4 @@
-define(['helpers/clean_touch_event'], 
+define(['/javascripts/helpers/clean_touch_event.js'], 
 function(cleanTouchEvent){
   return {
     'deviceorientation': function(callback){

@@ -1,19 +1,12 @@
 requirejs.config({
-  baseUrl:'/javascripts',
-  paths:{
-    text:'lib/requirejs-text.2.0.3',
-    handlebars:'lib/handlebars-1.0.rc.1',
-    socketio:'/socket.io/socket.io',
-    ws:'helpers/ws',
-    event2socket:'helpers/event2socket'
-  },
+  waitSeconds:2,
   shim:{
-    'handlebars':['text'],
-    'ws':['socketio']
+    '/javascripts/lib/handlebars-1.0.rc.1':['/javascripts/lib/requirejs-text.2.0.3'],
+    '/javascripts/helpers/ws.js':['/socket.io/socket.io.js']
   }
 });
 
-define(['ws','handlebars','event2socket'],
+define('sensor',['/javascripts/helpers/ws.js','/javascripts/lib/handlebars-1.0.rc.1.js','/javascripts/helpers/event2socket.js'],
 function(ws){
   ws.on('hello', function(data){ // we should fire this when opening a "game"
     document.body.style.backgroundColor=data.color;

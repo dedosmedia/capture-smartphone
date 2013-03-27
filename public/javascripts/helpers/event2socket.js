@@ -1,4 +1,4 @@
-define(['ws','helpers/sensors'],
+define(['/javascripts/helpers/ws.js','/javascripts/helpers/sensors.js'],
 function(ws, sensors){
   var interval = 5, eventQueue = {};
 
