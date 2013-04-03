@@ -1,0 +1,1 @@
+r.js -o name=javascripts/sensor out=public/min/sensor.js baseUrl=public excludeShallow=/socket.io/socket.io.js
