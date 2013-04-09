@@ -1,11 +1,3 @@
-requirejs.config({
-  waitSeconds:2,
-  shim:{
-    '/javascripts/lib/handlebars-1.0.rc.1':['/javascripts/lib/requirejs-text.2.0.3'],
-    '/javascripts/helpers/ws.js':['/socket.io/socket.io.js']
-  }
-});
-
 define('sensor',['/javascripts/helpers/ws.js','/javascripts/lib/handlebars-1.0.rc.1.js','/javascripts/helpers/event2socket.js'],
 function(ws){
   ws.on('hello', function(data){ // we should fire this when opening a "game"

@@ -9,21 +9,10 @@
 	<div class="container" style="position:absolute;left:0;top:0;width:1366px;height:720px;"></div>
 	<script src="/javascripts/lib/require.2.1.1.js"></script>
 	<script>
-	requirejs.config({
-	  baseUrl:'/javascripts',
-	  paths:{
-	    socketio:'/socket.io/socket.io',
-	    ws:'helpers/ws',
-	    event2socket:'helpers/event2socket'
-	  },
-	  shim:{
-	    'ws':['socketio']
-	  }
-	});
 
 	require([
-	  'helpers/socket2event', 
-	  'ws'
+	  '/javascripts/helpers/socket2event.js', 
+	  '/javascripts/helpers/ws.js'
 		], function(devices, ws){
 			var c=document.querySelector('canvas'), ctx=c.getContext('2d');
 			

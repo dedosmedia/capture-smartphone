@@ -1,5 +1,6 @@
-define(['/javascripts/helpers/ws'],
+define('/javascripts/helpers/socket2event.js',['/javascripts/helpers/ws.js'],
 function(ws){
+  console.log(2)
   var events = {};
   
   function fire(eventType, data){

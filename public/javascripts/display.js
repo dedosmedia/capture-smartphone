@@ -1,23 +1,17 @@
 requirejs.config({
-  baseUrl:'/javascripts',
   paths:{
-    text:'lib/requirejs-text.2.0.3',
-    handlebars:'lib/handlebars-1.0.rc.1',
-    socketio:'/socket.io/socket.io',
-    ws:'helpers/ws',
-    event2socket:'helpers/event2socket'
+    'text':'/javascripts/lib/requirejs-text.2.0.3'
   },
   shim:{
-    'handlebars':['text'],
-    'ws':['socketio']
+    '/javascripts/lib/handlebars-1.0.rc.1.js':['text']
   }
 });
 
 define([
-  'helpers/socket2event', 
+  '/javascripts/helpers/socket2event.js', 
   'text!/partials/player.hbs.html',
-  'ws',
-  'handlebars'
+  '/javascripts/helpers/ws.js',
+  '/javascripts/lib/handlebars-1.0.rc.1.js'
   ], function(devices, hbs_player, ws){
   var t_player = Handlebars.compile(hbs_player);
   

@@ -24,21 +24,10 @@
 
 <script src="/javascripts/lib/require.2.1.1.js"></script>
 <script>
-requirejs.config({
-  baseUrl:'/javascripts',
-  paths:{
-    socketio:'/socket.io/socket.io',
-    ws:'helpers/ws',
-    event2socket:'helpers/event2socket'
-  },
-  shim:{
-    'ws':['socketio']
-  }
-});
 
 require([
-  'helpers/socket2event', 
-  'ws'
+  '/javascripts/helpers/socket2event.js', 
+  '/javascripts/helpers/ws.js'
 	], function(devices, ws){
 		devices.addEventListener('touchstart', function(e){
 			jump(document.querySelector('.bobby'));
