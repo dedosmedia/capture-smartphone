@@ -62,7 +62,8 @@ io.set('log level', 1);
 io.enable('browser client minification');
 io.enable('browser client gzip');
 io.set('transports', [
-    'websocket'
+    'xhr-polling'
+//    'websocket'
 //  , 'flashsocket'
 //  , 'htmlfile'
 //  , 'xhr-polling'
