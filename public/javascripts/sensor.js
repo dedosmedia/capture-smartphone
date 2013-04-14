@@ -1,3 +1,7 @@
+requirejs.config({
+  waitSeconds:30
+});
+
 define('sensor',[
   '/javascripts/helpers/ws.js',
   '/javascripts/helpers/event2socket.js'

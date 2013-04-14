@@ -1,4 +1,5 @@
 requirejs.config({
+  waitSeconds:30,
   paths:{
     'text':'/javascripts/lib/requirejs-text.2.0.3'
   },

@@ -26,7 +26,6 @@ app.configure(function(){
   app.use(express.bodyParser());
   app.use(express.methodOverride());
   app.use(require('stylus').middleware(__dirname + '/public'));
-  app.use(express.staticCache());
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(app.router);
 });
@@ -41,7 +40,7 @@ app.get('/sensor', routes.sensor);
 app.get('/display', routes.display);
 app.get('*', function(req, res){
   var url = 'http://game.tap5.com/sensor/';
-  var xmlResponse = '<HTML><BODY><H2>Browser error!</H2>Browser does not support redirects!</BODY> <!-- <?xml version="1.0" encoding="UTF-8"?> <WISPAccessGatewayParam xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.wballiance.net/wispr_2_0.xsd"> <Redirect> <MessageType>100</MessageType> <ResponseCode>0</ResponseCode> <VersionHigh>2.0</VersionHigh> <VersionLow>1.0</VersionLow> <AccessProcedure>1.0</AccessProcedure> <AccessLocation>CDATA[[isocc=,cc=,ac=,network=Coova,]]</AccessLocation> <LocationName>CDATA[[My_HotSpot]]</LocationName> <LoginURL>'+url+'</LoginURL> <AbortLoginURL>'+url+'</AbortLoginURL> <EAPMsg>AQEABQE=</EAPMsg> </Redirect> </WISPAccessGatewayParam> --> </HTML>';
+  var xmlResponse = '<HTML><BODY><H2>Browser error!</H2>Browser does not support redirects!</BODY> <!-- <?xml version="1.0" encoding="UTF-8"?> <WISPAccessGatewayParam xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.wballiance.net/wispr_2_0.xsd"> <Redirect> <MessageType>100</MessageType> <ResponseCode>0</ResponseCode> <VersionHigh>2.0</VersionHigh> <VersionLow>1.0</VersionLow> <AccessProcedure>1.0</AccessProcedure> <AccessLocation>CDATA[[isocc=,cc=,ac=,network=Tap5,]]</AccessLocation> <LocationName>CDATA[[Cap5]]</LocationName> <LoginURL>'+url+'</LoginURL> <AbortLoginURL>'+url+'</AbortLoginURL> <EAPMsg>AQEABQE=</EAPMsg> </Redirect> </WISPAccessGatewayParam> --> </HTML>';
   res.statusCode = 302;
   res.setHeader('Content-Type', 'text/html; charset=UTF-8');
   res.setHeader('Content-Length', xmlResponse.length);
@@ -60,8 +59,6 @@ var ioHandle = http.createServer(app).listen(app.get('port'), function(){
 io = io.listen(ioHandle);
 
 io.set('log level', 1);
-io.enable('browser client minification');
-io.enable('browser client gzip');
 io.set('transports', [
     'xhr-polling'
 //    'websocket'
@@ -127,6 +124,6 @@ io.sockets.on('connection', function (socket) {
   }, heartbeatInterval);
 });
 
-setInterval(function() {
-  console.log(stats.toJSON());
-}, 1000);
+//setInterval(function() {
+//  console.log(stats.toJSON());
+//}, 1000);
