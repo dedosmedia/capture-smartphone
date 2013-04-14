@@ -7,7 +7,7 @@ requirejs.config({
   }
 });
 
-define([
+define('display',[
   '/javascripts/helpers/socket2event.js', 
   'text!/partials/player.hbs.html',
   '/javascripts/helpers/ws.js',
