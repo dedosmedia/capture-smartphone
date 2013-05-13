@@ -3,9 +3,9 @@
 <head>
 	<title>Example: Paint</title>
 </head>
-<body>
+<body style="background:#000;overflow:hidden;padding:0;margin:0">
 
-	<canvas height="720" width="1366"></canvas>
+	<canvas width="1366" height="720"></canvas>
 	<div class="container" style="position:absolute;left:0;top:0;width:1366px;height:720px;"></div>
 	<script src="/javascripts/lib/require.2.1.1.js"></script>
 	<script>
@@ -19,20 +19,9 @@
 			ctx.lineWidth=15;
 			ctx.lineCap = 'round';
 
-			function putCircle(coords, color, el){
-				var offset_x = parseInt(el.style.left.replace('px',''));
-				var offset_y = parseInt(el.style.top.replace('px',''));
-				ctx.fillStyle = color;
-				ctx.beginPath();
-				ctx.arc(offset_x+coords.x, offset_y+coords.y, 10, 0, Math.PI*2, true);
-				ctx.closePath();
-				ctx.fill();
-			}
-
 			function line(from, to, color, el){
 				var offset_x = parseInt(el.style.left.replace('px',''));
 				var offset_y = parseInt(el.style.top.replace('px',''));
-				console.log(offset_y, offset_x)
 				ctx.strokeStyle = color;
 				ctx.beginPath();
 				ctx.moveTo(offset_x+from.x, offset_y+from.y)
@@ -67,7 +56,6 @@
 						t=e.targetTouches[i];
 						o={x:t.clientX,y:t.clientY};
 						painters[e.id+'_'+i]=o;
-						putCircle(o, e.color, el);
 			    }
 				} else { // swipe detected, move!
 					var t=e.targetTouches[0], o={x:t.clientX,y:t.clientY};
@@ -100,7 +88,7 @@
 				}
 		  });
 			devices.addEventListener('deviceinfo', function(e){
-				console.log('deviceinfo');
+				console.log('Recieved deviceinfo from server');
 				console.log(e);
 				// make a box this size with alpha transparency
 				var el=document.createElement('div');

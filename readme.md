@@ -3,7 +3,7 @@
 Use smartphones as game controllers, get all events in another browser. Make your game in that web page. 
 
 
-###Getting started
+### Getting started
 
 * Install and run the server
 ```sh
