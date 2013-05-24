@@ -25,19 +25,41 @@
 <script src="/javascripts/lib/require.2.1.1.js"></script>
 <script>
 
+function Highscore(size){
+	this.scores = new Array(size);
+	// reset the list
+	for(var i=0; i<size; i++){
+		this.scores[i]=0;
+	}
+	this.fitsHighscore = function(score){
+		return (score>this.scores[this.scores.length-1]);
+	}
+	this.addScore = function(score){
+		this.scores.push(score);
+		this.scores = this.scores.sort(function(a,b){return b-a});
+		this.scores.pop();
+		return this.scores;
+	}
+}
+
 require([
   '/javascripts/helpers/socket2event.js', 
   '/javascripts/helpers/ws.js'
 	], function(devices, ws){
+		var highscore=new Highscore(5),
+			$insertcoin = document.querySelector('.insertcoin'),
+			$bobby = document.querySelector('.bobby');
+		
+		
 		devices.addEventListener('touchstart', function(e){
-			jump(document.querySelector('.bobby'));
+			jump($bobby);
 	  });
     ws.on('client connected', function(e){
             console.log('client connected');
-            document.querySelector('.insertcoin').style.display='none';
+            $insertcoin.style.display='none';
     });
     ws.on('client disconnected', function(e){
-            document.querySelector('.insertcoin').style.display='block';
+            $insertcoin.style.display='block';
     });
 		ws.emit('join','displays');
 	});
