@@ -4,10 +4,12 @@
 	<link rel="stylesheet" href="style.css">
 	<script>
 	function jump(el){
-		el.classList.add('jump');
-		setTimeout(function(){
-			el.classList.remove('jump');
-		}, 1200);
+		if(!el.classList.contains('jump')){
+			el.classList.add('jump');
+			setTimeout(function(){
+				el.classList.remove('jump');
+			}, 1200);
+		} // otherwise Bobby is already jumping
 	}
 	</script>
 </head>
@@ -27,7 +29,6 @@
 
 function Highscore(size){
 	this.scores = new Array(size);
-	// reset the list
 	for(var i=0; i<size; i++){
 		this.scores[i]=0;
 	}
