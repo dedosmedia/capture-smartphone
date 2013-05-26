@@ -22,7 +22,7 @@ function(ws, sensors){
   // Todo activate subscription per event type 
   sensors.deviceorientation(emitAtInterval);
   sensors.devicemotion(emitAtInterval);
-  sensors.geolocation(emitAtInterval);
+  //sensors.geolocation(emitAtInterval);
   sensors.touchstart(emitAtInterval);
   sensors.touchmove(emitAtInterval);
   sensors.touchend(emitAtInterval);
