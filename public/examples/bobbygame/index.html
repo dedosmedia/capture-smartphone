@@ -43,6 +43,11 @@ function Highscore(size){
 	}
 }
 
+requirejs.config({
+  waitSeconds:30
+});
+
+
 require([
   '/javascripts/helpers/socket2event.js', 
   '/javascripts/helpers/ws.js'
