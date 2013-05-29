@@ -10,11 +10,45 @@
 	<script src="/javascripts/lib/require.2.1.1.js"></script>
 	<script>
 
+	function Player(){
+		var el = document.createElement('div');
+		this.el.innerHTML = '<section class="player" data-socketid="device_'+
+			e.id+
+			'" style="position:absolute;left:0;top:0;'+
+			'width:'+e.width+'px;'+
+			'height:'+e.height+'px;'+
+			'background-color:'+e.color.replace('1)','0.15)')+';'+
+			'border:1px solid '+e.color+'"></div>';
+		this.el = el.querySelector('section');
+		document.querySelector('.container').appendChild(this.el);
+	}
+	Player.prototype.show = function(){
+		this.el.style.display = 'block';
+	};
+	Player.prototype.hide = function(){
+		this.el.style.display = 'none';
+	};
+	Player.prototype.move = function (from, to, el){
+				var dx = to.x - from.x;
+				var dy = to.y - from.y;
+				console.log(dx, dy);
+				el.style.left = parseInt(el.style.left.replace('px',''))+dx+'px';
+				el.style.top = parseInt(el.style.top.replace('px',''))+dy+'px';
+			}
+	Player.prototype.destroy = function(){
+    if(this.el) document.querySelector('.container').removeChild(this.el);
+	};
+	
+	
+	var players = [];
+
 	require([
 	  '/javascripts/helpers/socket2event.js', 
 	  '/javascripts/helpers/ws.js'
 		], function(devices, ws){
 			var c=document.querySelector('canvas'), ctx=c.getContext('2d');
+			
+			
 			
 			ctx.lineWidth=15;
 			ctx.lineCap = 'round';
@@ -27,6 +61,13 @@
 				ctx.moveTo(offset_x+from.x, offset_y+from.y)
 				ctx.lineTo(offset_x+to.x, offset_y+to.y);
 				ctx.stroke();
+			}
+			
+			function showOverlay(){
+				
+			}
+			function hideOverlay(){
+				
 			}
 			
 			function move(from, to, el){
